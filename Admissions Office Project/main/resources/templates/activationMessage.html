@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  th:with="title=#{registration}">
+
+<th:block th:replace="fragments/common::commonPage(_, ~{::main})">
+	<main>
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">[[#{activationMessageHeader}]]</h5>
+				</div>
+				<div class="modal-body">
+					[[#{activationMessage}]]
+				</div>
+				<div class="modal-footer">
+					<a th:href="@{/login}"><button type="button" class="btn btn-primary btn-sm">OK</button></a>
+				</div>
+			</div>
+		</div>
+	</main>
+</th:block>
+
+</html>

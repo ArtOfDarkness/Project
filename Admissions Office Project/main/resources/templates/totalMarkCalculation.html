@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  th:with="title=#{tmcalc}">
+
+<th:block th:replace="fragments/common::commonPage(_, ~{::main})">
+	<main>
+		<h3>[[${title}]]</h3>
+		<h6 class="d-inline-block" th:text="|#{tmcalc.applicant}:|"></h6><span class="ml-2">[[${aplication.applicant.user.firstName}]] [[${aplication.applicant.user.lastName}]]</span><br>
+		<h6 class="d-inline-block" th:text="|#{tmcalc.speciality}:|"></h6><span class="ml-2">[[${aplication.speciality.title}]]</span><br>
+		<h6 class="d-inline-block" th:text="|#{tmcalc.faculty}:|"></h6><span class="ml-2">[[${aplication.speciality.faculty.title}]]</span><br>
+				
+		<table class="table text-center">
+			<thead class="thead-light">
+				<tr>					
+					<th scope="col">[[#{tmcalc.subject}]]</th>
+					<th scope="col">[[#{tmcalc.mark}]]</th>
+					<th scope="col"></th>
+					<th scope="col">[[#{tmcalc.coeff}]]</th>
+					<th scope="col"></th>
+					<th scope="col">[[#{tmcalc.result}]]</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="znoMark : ${aplication.znoMarks}">
+					<td class="text-left" th:text="${znoMark.key.title}"/>						
+					<td th:text="${znoMark.value}"/>
+					<td>x</td>
+					<td th:text="${#numbers.formatDecimal(aplication.speciality.faculty.subjectCoeffs[__${znoMark.key.id}__], 1, 2)}"/>
+					<td>=</td>
+					<th th:text="${#numbers.formatDecimal(znoMark.value * aplication.speciality.faculty.subjectCoeffs[__${znoMark.key.id}__], 1, 2)}"/>
+				</tr>
+				<tr class="table-light">
+					<th class="text-left" th:text="#{tmcalc.total_zno_mark}"/>						
+					<td/>
+					<td/>
+					<td/>
+					<td/>
+					<th th:text="${#numbers.formatDecimal(totalZnoMark, 1, 2)}"/>
+				</tr>
+				<tr>
+					<td/>						
+					<td/>
+					<td/>
+					<td/>
+					<td/>
+					<th/>
+				</tr>
+				<tr>
+					<td class="text-left font-italic" th:text="#{tmcalc.total_zno_mark}"/>						
+					<td th:text="${#numbers.formatDecimal(totalZnoMark, 1, 2)}"/>
+					<td>x</td>
+					<td th:text="${#numbers.formatDecimal(znoCoeff, 1, 2)}"/>
+					<td>=</td>
+					<th th:text="${#numbers.formatDecimal(totalZnoMark * znoCoeff, 1, 2)}"/>
+				</tr>
+				<tr>
+					<td class="text-left font-italic" th:text="#{tmcalc.grade_point_avg}"/>						
+					<td th:text="${aplication.attMark}"/>
+					<td>x</td>
+					<td th:text="${#numbers.formatDecimal(attMarkCoeff, 1, 2)}"/>
+					<td>=</td>
+					<th th:text="${#numbers.formatDecimal(aplication.attMark * attMarkCoeff, 1, 2)}"/>
+				</tr>
+				<tr class="table-secondary">
+					<th class="text-left" th:text="#{tmcalc.total_mark}"/>						
+					<th/>
+					<th/>
+					<th/>
+					<th/>
+					<th th:text="${#numbers.formatDecimal(aplication.ratingList.totalMark, 3, 2)}"/>
+				</tr>					
+			</tbody>
+		</table>
+		<div class="mt-4"><a th:href="@{${refererURI}}">[[#{tmcalc.previous}]]</a></div>
+	</main>
+</th:block>
+
+</html>
